@@ -1,4 +1,4 @@
-const USER = require('../models/user.model');
+const USER = require('../models/user.model')
 let mongoose = require('mongoose');
 
 module.exports = {
@@ -18,14 +18,18 @@ module.exports = {
             occupation: "Developer",
             country:"Turkey"
         })
+
         // USER.create(ozge, function (err, data) {
         //     if (err) return console.error(err);
         //     done(null, data)
         //     console.log("ozge created")
         // })
-
-       ozge.markModified("USER")
-        await ozge.save()
+        await ozge.save(function(err, data) {
+            if (err) {
+                console.log(err)
+            }
+            console.log(data)
+        })
         return ozge
    }
 }

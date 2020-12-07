@@ -20,9 +20,12 @@ router.get('/:id', async function(req, res, next) {
   res.send(user);
 });
 
-router.get('/create-save-user', async function (req,res,next){
-  let createdUser = await userController.createAndSaveUser()
+router.get('/create-save-user',  function (req,res,next){
+  console.log(req.params)
+  let createdUser = userController.createAndSaveUser()
   res.json(createdUser)
 })
-
+router.get('/home',function (req,res,next){
+  res.json({ greeting: 'hello API' });
+})
 module.exports = router;

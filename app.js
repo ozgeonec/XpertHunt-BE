@@ -24,7 +24,8 @@ app.use(cors());
 
 app.use('/', indexRouter);
 //app.use('/users', usersRouter);
-app.use('/create-save-user', usersRouter);
+app.use('/create-save-user',usersRouter);
+app.use('/home', usersRouter);
 
 //MongoDB Connection
 const uri = process.env.ATLAS_URI;
