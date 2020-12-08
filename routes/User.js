@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const userController = require('../controllers/UserController')
-let USER = require('../models/user.model');
+let USER = require('../models/UserModel');
 
 // function (err,data){
 //   if (err) {return next(err);}
@@ -21,7 +21,6 @@ router.get('/:id', async function(req, res, next) {
 });
 
 router.get('/create-save-user',  function (req,res,next){
-  console.log(req.params)
   let createdUser = userController.createAndSaveUser()
   res.json(createdUser)
 })

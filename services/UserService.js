@@ -1,4 +1,4 @@
-let User = require('../models/user.model');
+let User = require('../models/UserModel');
 let mongoose = require('mongoose');
 let multer = require('multer');
 let fs = require('fs');

@@ -9,7 +9,6 @@ const server = http.createServer(app);
 
 server.listen(port);
 
-// app.use('/create-save-user', indexRouter);
-// app.use('/home', indexRouter);
+
 
 module.exports=server;

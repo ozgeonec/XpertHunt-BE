@@ -1,12 +1,12 @@
-const mongoose = require('mongoose');
+const mongoose = require('mongoose')
+const fs = require('fs')
 
 const {Schema} = mongoose
 
 const userSchema = new Schema({
-    _id: mongoose.Schema.ObjectId,
     firstname:{type:String, required:true, trim: true, minlength: 3},
     lastname:{type:String, required:true, trim: true, minlength: 3},
-    avatar: {data: Buffer, contentType: String},
+    avatar: {type: String, data: Buffer },
     username:{type:String, required:true, unique: true, trim: true, minlength: 3},
     short_desc:{type:String, required:true, maxLength: 50},
     description:{type:String, required:true, minlength: 150},
@@ -15,10 +15,13 @@ const userSchema = new Schema({
     country:{type:String, required:true},
 },{
     timestamps:true,
-});
+})
 
-const USER = mongoose.model('USER', userSchema);
+const USER = mongoose.model('USER', userSchema)
 
+// let user =new USER
+// user.avatar.data = fs.readFileSync('public/images/profilpic.jpg')
+// user.avatar.contentType = 'image/jpg'
 
 
 

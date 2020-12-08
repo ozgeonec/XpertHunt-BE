@@ -8,12 +8,20 @@ const cors = require('cors');
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/User');
+const loginRouter = require('./routes/Login')
 
 const app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
+
+//routes
+app.use('/', indexRouter)
+app.use('/create-save-user',usersRouter)
+app.use('/home', usersRouter)
+app.use('/login',loginRouter)
+
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -22,10 +30,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors());
 
-app.use('/', indexRouter);
-//app.use('/users', usersRouter);
-app.use('/create-save-user',usersRouter);
-app.use('/home', usersRouter);
+
 
 //MongoDB Connection
 const uri = process.env.ATLAS_URI;
