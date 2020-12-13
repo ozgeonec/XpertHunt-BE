@@ -20,7 +20,7 @@ app.set('view engine', 'pug');
 app.use('/', indexRouter)
 app.use('/create-save-user',usersRouter)
 app.use('/home', usersRouter)
-app.use('/login',loginRouter)
+
 
 
 app.use(logger('dev'));
