@@ -3,7 +3,7 @@ const {Schema} = mongoose
 
 const MessageSchema = new Schema({
     owner: {type: Schema.ObjectId, ref: 'USER'},
-    content: String,
+    content: {type: String},
     created: {type: Date, default: Date.now}
 })
 

@@ -1,37 +1,36 @@
 var express = require('express');
 var router = express.Router();
 const userController = require('../controllers/UserController')
+const adController = require('../controllers/AdvertController')
 
 const passport = require('passport');
 const passportConfig = require('../config/passport');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
+  console.log("welcome")
   res.render('index', { title: 'Express' });
 });
 router.get('/home',function (req,res,next){
   res.json({ greeting: 'hello API' });
 })
-router.get('/create-save-user',  function (req,res,next){
+router.get('/create-save-user', async function (req,res,next){
   console.log(req.params)
-  let createdUser = userController.createAndSaveUser()
+  let createdUser = await userController.createAndSaveUser()
   res.json(createdUser)
 })
-/* LOGIN ROUTE */
-// router.get('/login')
-//     .route('/login')
-//     .get((req, res, next) => {
-//       if (req.user)
-//         return res.redirect('/');
-//       res.render('accounts/login', {
-//         message: req.flash('loginMessage')
-//       });
-//     })
-//     .post(passport.authenticate('local-login', {
-//       successRedirect: '/', // redirect to the secure profile section
-//       failureRedirect: '/login', // redirect back to the signup page if there is an error
-//       failureFlash: true // allow flash messages
-//     }));
+
+
+/* SIGNUP ROUTE */
+router.post('/signup', function (req,res,next){
+  let createdUser = userController.createUser(req.body.email,req.body.username,req.body.password)
+  console.log(createdUser)
+  req.logIn(createdUser,function (err) {
+    if (err)
+      return next(err);
+    res.redirect('/');
+  })
+})
 
 /* PROFILE ROUTE */
 router.get('/profile', passportConfig.isAuthenticated, (req, res, next) => {
@@ -42,5 +41,12 @@ router.get('/logout', (req, res) => {
   req.logout();
   res.redirect('/');
 });
+/* ADVERT ROUTE */
+router.get('/create-ad', async function (req,res,next){
+  let newGig = await adController.createAdvert()
+  res.json(newGig)
+})
+
+
 
 module.exports = router;

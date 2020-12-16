@@ -5,10 +5,12 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const passport = require('passport');
+const flash = require('express-flash');
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/User');
-const loginRouter = require('./routes/Login')
+
 
 const app = express();
 
@@ -20,6 +22,7 @@ app.set('view engine', 'pug');
 app.use('/', indexRouter)
 app.use('/create-save-user',usersRouter)
 app.use('/home', usersRouter)
+app.use('/signup', usersRouter)
 
 
 
@@ -29,6 +32,13 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors());
+app.use(passport.initialize);
+app.use(passport.session);
+app.use(flash());
+app.use(function(req, res, next) {
+  res.locals.user = req.user;
+  next();
+});
 
 
 

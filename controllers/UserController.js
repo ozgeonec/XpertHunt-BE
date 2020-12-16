@@ -9,9 +9,9 @@ module.exports = {
             done(null, data)
         })
    },
-    createUser: async (email, username, password, done) => {
+   createUser: async (email, username, password) => {
        const user =  USER({
-            email: email,
+           email: email,
            username: username,
            password: password
        })
@@ -20,7 +20,7 @@ module.exports = {
        } catch (error) {
             throw error
        }
-    },
+   },
    createAndSaveUser: async (done) => {
         const ozge = USER({
             email: "ozgenuronec@gmail.com",
