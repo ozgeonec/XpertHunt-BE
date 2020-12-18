@@ -14,6 +14,23 @@ const usersRouter = require('./routes/User');
 
 const app = express();
 
+app.use(function(req, res, next) {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Credentials", "true");
+  res.setHeader(
+      "Access-Control-Allow-Methods",
+      "GET,HEAD,OPTIONS,POST,PUT,DELETE"
+  );
+  res.setHeader(
+      "Access-Control-Allow-Headers",
+      "*"
+  );
+  if (req.method === "OPTIONS") {
+    return res.status(200).end();
+  }
+  next();
+});
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
@@ -32,15 +49,20 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors());
-app.use(passport.initialize);
-app.use(passport.session);
-app.use(flash());
+app.use(passport.initialize.bind(passport));
+app.use(passport.session.bind(passport));
+app.use(flash);
 app.use(function(req, res, next) {
   res.locals.user = req.user;
   next();
 });
 
-
+// app.use(function(req, res, next) {
+//   res.header("Access-Control-Allow-Origin", "*");
+//   res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+//   res.header("Access-Control-Allow-Headers", "x-access-token, Origin, X-Requested-With, Content-Type, Accept");
+//   next();
+// });
 
 //MongoDB Connection
 const uri = process.env.ATLAS_URI;
