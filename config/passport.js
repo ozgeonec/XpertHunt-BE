@@ -1,7 +1,7 @@
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 
-
+const flash = require('express-flash');
 const User = require('../models/UserModel');
 
 passport.serializeUser(function(user, done) {

@@ -27,14 +27,14 @@ const userSchema = new Schema({
         minlength: [6, 'Your password must be a t least 6 characters long'],
         select: false
     },
-    firstname:{type:String, required:true, trim: true, minlength: 3},
-    lastname:{type:String, required:true, trim: true, minlength: 3},
+    firstname:{type:String, trim: true, minlength: 3},
+    lastname:{type:String, trim: true, minlength: 3},
     avatar: {data: Buffer, contentType: String },
-    short_desc:{type:String, required:true, maxLength: 50},
-    description:{type:String, required:true, minlength: 150},
-    occupation:{type:String, required:true},
+    short_desc:{type:String, maxLength: 50},
+    description:{type:String, minlength: 150},
+    occupation:{type:String},
     score:{type:Number},
-    country:{type:String, required:true},
+    country:{type:String},
     adverts:[{type:Schema.ObjectId, ref:'ADVERT' }]
 },{
     timestamps:true,
