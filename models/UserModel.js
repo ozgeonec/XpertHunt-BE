@@ -40,11 +40,25 @@ const userSchema = new Schema({
     timestamps:true,
 })
 
-//Encrypting Passwords before Saving
-userSchema.pre('save', async function(next){
-    this.password = await bcrypt.hash(this.password, 10);
-})
-
+// //Encrypting Passwords before Saving
+// userSchema.pre('save', async function(next){
+//     this.password = await bcrypt.hash(this.password, 10);
+// })
+//
+userSchema.pre('save', function(next) {
+    let user = this;
+    if (!user.isModified('password')) return next();
+    if (user.password) {
+        bcrypt.genSalt(10, function(err, salt) {
+            if (err) return next(err);
+            bcrypt.hash(user.password, salt, null, function(err, hash) {
+                if (err) return next(err);
+                user.password = hash;
+                next(err);
+            });
+        });
+    }
+});
 //Compare password in database
 userSchema.methods.comparePassword = async function(enterPassword){
     return await bcrypt.compare(enterPassword, this.password);

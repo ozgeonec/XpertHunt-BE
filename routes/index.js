@@ -3,8 +3,8 @@ const router = express.Router();
 const userController = require('../controllers/UserController')
 const adController = require('../controllers/AdvertController')
 
-
 const passport = require('passport');
+const {authenticate} = require('passport');
 const passportConfig = require('../config/passport');
 const cors = require("cors");
 
@@ -28,8 +28,6 @@ router.get('/create-save-user', async function (req,res,next){
 
 /* SIGNUP ROUTE */
 router.post('/signup', async function (req,res,next){
-  // console.log(req.body.user.email)
-  // console.log(req.query)
   console.log(req.body)
   let createdUser = await userController.createUser(req.body.email,req.body.username,req.body.password)
   console.log(createdUser)
@@ -40,7 +38,15 @@ router.post('/signup', async function (req,res,next){
   })
   res.send("You are a registered user now");
 })
-
+router.post('/login', passport.authenticate('local-login', {
+  session:false,
+  successRedirect : '/', // redirect to the secure profile section
+  failureRedirect : '/signup', // redirect back to the signup page if there is an error
+  failureFlash : true // allow flash messages
+}),function (req,res){
+  //res.redirect('/' + req.user.username);
+  res.send("logged")
+})
 /* PROFILE ROUTE */
 router.get('/profile', passportConfig.isAuthenticated, (req, res, next) => {
   res.render('accounts/profile');

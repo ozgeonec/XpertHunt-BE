@@ -7,7 +7,8 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const passport = require('passport');
 const flash = require('express-flash');
-const bodyParser = require('body-parser')
+const session = require('express-session')
+
 
 const indexRouter = require('./routes/index');
 
@@ -36,9 +37,11 @@ app.use('/signup', indexRouter)
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors());
 app.use(cookieParser());
+app.use(session({ cookie: { maxAge: 60000 }}));
 app.use(passport.initialize.bind(passport));
 app.use(passport.session.bind(passport));
-app.use(flash);
+app.use(flash());
+
 // app.use(bodyParser.json());
 // app.use(bodyParser.urlencoded({ extended: "false" }))
 
