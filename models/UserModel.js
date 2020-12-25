@@ -2,6 +2,7 @@ const mongoose = require('mongoose')
 const fs = require('fs')
 const validator = require('validator');
 const bcrypt = require('bcryptjs')
+const passportLocalMongoose = require('passport-local-mongoose');
 
 const {Schema} = mongoose
 
@@ -45,23 +46,17 @@ const userSchema = new Schema({
 //     this.password = await bcrypt.hash(this.password, 10);
 // })
 //
-userSchema.pre('save', function(next) {
-    let user = this;
-    if (!user.isModified('password')) return next();
-    if (user.password) {
-        bcrypt.genSalt(10, function(err, salt) {
-            if (err) return next(err);
-            bcrypt.hash(user.password, salt, null, function(err, hash) {
-                if (err) return next(err);
-                user.password = hash;
-                next(err);
-            });
-        });
-    }
+userSchema.pre('save', async function(next) {
+    this.password= await bcrypt.hash(this.password, 10);
+    next();
+    console.log(this.password)
 });
 //Compare password in database
 userSchema.methods.comparePassword = async function(enterPassword){
-    return await bcrypt.compare(enterPassword, this.password);
+    console.log(this.password)
+    console.log(enterPassword)
+    return await bcrypt.compare(enterPassword.toString(), this.password);
+
 }
 userSchema.methods.gravatar = function (size){
     if (!size)
@@ -74,6 +69,7 @@ userSchema.methods.gravatar = function (size){
         .digest('hex');
     return 'https://gravatar.com/avatar/' + md5 + '?s=' + size + '&d=retro';
 }
+userSchema.plugin(passportLocalMongoose);
 const USER = mongoose.model('USER', userSchema)
 
 // let user =new USER

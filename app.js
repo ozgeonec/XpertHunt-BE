@@ -5,9 +5,11 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const session = require('express-session')
 const passport = require('passport');
 const flash = require('express-flash');
-const session = require('express-session')
+const connectEnsureLogin = require('connect-ensure-login'); //authorization
+
 
 
 const indexRouter = require('./routes/index');
@@ -42,8 +44,6 @@ app.use(passport.initialize.bind(passport));
 app.use(passport.session.bind(passport));
 app.use(flash());
 
-// app.use(bodyParser.json());
-// app.use(bodyParser.urlencoded({ extended: "false" }))
 
 app.use(function(req, res, next) {
   res.locals.user = req.user;
@@ -64,15 +64,15 @@ app.set('view engine', 'pug');
 app.use(logger('dev'));
 
 
-
-
 /*MongoDB Connection*/
 const uri = process.env.ATLAS_URI;
 mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 const connection = mongoose.connection;
 connection.once('open', () => {console.log("MongoDB database connection established successfully");})
 connection.on("error", console.error.bind(console, "connection error:"));
-
+mongoose.set('useNewUrlParser', true);
+mongoose.set('useFindAndModify', false);
+mongoose.set('useCreateIndex', true);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

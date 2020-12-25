@@ -45,6 +45,7 @@ router.post('/login', passport.authenticate('local-login', {
   failureFlash : true // allow flash messages
 }),function (req,res){
   //res.redirect('/' + req.user.username);
+  console.log("routerpass: " + req.body)
   res.send("logged")
 })
 /* PROFILE ROUTE */
