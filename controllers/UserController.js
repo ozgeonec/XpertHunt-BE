@@ -9,6 +9,12 @@ module.exports = {
             done(null, data)
         })
    },
+   getUserByUsername: async (username,done) => {
+       await USER.findOne(username, function (err,data){
+           if (err) return console.log(err)
+           done(null, data)
+       })
+   },
    createUser: async (email, username, password) => {
        const user =  USER({
            email: email,

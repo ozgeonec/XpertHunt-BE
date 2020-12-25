@@ -10,7 +10,6 @@ const cors = require("cors");
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-
   res.render('index', { title: 'Express' });
 });
 router.get('/home',cors(),function (req,res,next){
@@ -34,20 +33,24 @@ router.post('/signup', async function (req,res,next){
   req.logIn(createdUser,function (err) {
     if (err) return next(err);
     res.redirect('/');
-
   })
   res.send("You are a registered user now");
 })
+/* LOGIN ROUTE */
 router.post('/login', passport.authenticate('local-login', {
   session:false,
-  successRedirect : '/', // redirect to the secure profile section
+  successRedirect : '/'+ req.user.username, // redirect to the secure profile section
   failureRedirect : '/signup', // redirect back to the signup page if there is an error
   failureFlash : true // allow flash messages
 }),function (req,res){
-  //res.redirect('/' + req.user.username);
-  console.log("routerpass: " + req.body)
-  res.send("logged")
+  res.redirect('/' + req.user.username);
 })
+
+router.get('/:username', async function (req,res,next){
+  let user = userController.getUserByUsername(req.params.username)
+  res.json(user)
+})
+
 /* PROFILE ROUTE */
 router.get('/profile', passportConfig.isAuthenticated, (req, res, next) => {
   res.render('accounts/profile');

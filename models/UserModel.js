@@ -41,11 +41,7 @@ const userSchema = new Schema({
     timestamps:true,
 })
 
-// //Encrypting Passwords before Saving
-// userSchema.pre('save', async function(next){
-//     this.password = await bcrypt.hash(this.password, 10);
-// })
-//
+// Encrypting Passwords before Saving
 userSchema.pre('save',async function (next) {
     let user = this;
     if (!user.isModified('password'))
@@ -65,22 +61,14 @@ userSchema.pre('save',async function (next) {
             });
     }
 });
-// userSchema.pre('save', async function(next) {
-//     this.password= await bcrypt.hash(this.password, 10);
-//     next();
-//     console.log(this.password)
-// });
+
 //Compare password in database
 userSchema.methods.comparePassword = async function(enterPassword){
-    console.log(this.password)
-    console.log(enterPassword)
+
     return await bcrypt.compare(enterPassword.toString(), this.password);
 
 }
-// userSchema.methods.comparePassword = function (password) {
-//
-//     return bcrypt.compareSync(password, this.password);
-// };
+
 userSchema.methods.gravatar = function (size){
     if (!size)
         size = 200;
