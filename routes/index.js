@@ -4,7 +4,7 @@ const userController = require('../controllers/UserController')
 const adController = require('../controllers/AdvertController')
 
 const passport = require('passport');
-const {authenticate} = require('passport');
+const authenticate = require('passport');
 const passportConfig = require('../config/passport');
 const cors = require("cors");
 
@@ -12,15 +12,17 @@ const cors = require("cors");
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
-router.get('/home',cors(),function (req,res,next){
+router.get('/home',function (req,res){
   res.json({ greeting: 'hello API' });
-  next();
+
 })
 router.get('/create-save-user', async function (req,res,next){
   console.log(req.params)
   let createdUser = await userController.createAndSaveUser()
   res.json(createdUser)
 })
+
+
 /* USER ROUTE */
 //router.get('/user')
 
@@ -39,22 +41,24 @@ router.post('/signup', async function (req,res,next){
 /* LOGIN ROUTE */
 router.post('/login', passport.authenticate('local-login', {
   session:false,
-  successRedirect : '/'+ req.user.username, // redirect to the secure profile section
+  successRedirect : '/profile', // redirect to the secure profile section
   failureRedirect : '/signup', // redirect back to the signup page if there is an error
   failureFlash : true // allow flash messages
 }),function (req,res){
-  res.redirect('/' + req.user.username);
-})
-
-router.get('/:username', async function (req,res,next){
-  let user = userController.getUserByUsername(req.params.username)
-  res.json(user)
+  console.log(res)
 })
 
 /* PROFILE ROUTE */
-router.get('/profile', passportConfig.isAuthenticated, (req, res, next) => {
-  res.render('accounts/profile');
+router.get('/profile', passportConfig.isAuthenticated, (req, res) => {
+  console.log("hello")
+  console.log(res.json())
 });
+
+/*ANOTHER PERSON'S PROFILE*/
+router.get('/:username', async function (req,res,next){
+  let user = await userController.getUserByUsername(req.params.username)
+  res.json(user)
+})
 
 router.get('/logout', (req, res) => {
   req.logout();

@@ -9,10 +9,14 @@ module.exports = {
             done(null, data)
         })
    },
-   getUserByUsername: async (username,done) => {
-       await USER.findOne(username, function (err,data){
-           if (err) return console.log(err)
-           done(null, data)
+   getUserByUsername: async (username) => {
+       await USER.find({username:username}, function (err,data){
+           if (err){
+               return console.log(err)
+           } else{
+               //console.log("data: " + data)
+               return data;
+           }
        })
    },
    createUser: async (email, username, password) => {

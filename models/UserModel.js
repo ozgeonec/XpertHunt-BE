@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 const fs = require('fs')
 const validator = require('validator');
 const bcrypt = require('bcryptjs')
-const passportLocalMongoose = require('passport-local-mongoose');
+
 
 const {Schema} = mongoose
 
@@ -80,7 +80,7 @@ userSchema.methods.gravatar = function (size){
         .digest('hex');
     return 'https://gravatar.com/avatar/' + md5 + '?s=' + size + '&d=retro';
 }
-userSchema.plugin(passportLocalMongoose);
+
 const USER = mongoose.model('USER', userSchema)
 
 // let user =new USER
