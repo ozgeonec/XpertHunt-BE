@@ -64,9 +64,11 @@ userSchema.pre('save',async function (next) {
 
 //Compare password in database
 userSchema.methods.comparePassword = async function(enterPassword){
-
-    return await bcrypt.compare(enterPassword.toString(), this.password);
-
+    try {
+        return await bcrypt.compare(enterPassword.toString(), this.password);
+    } catch (err) {
+        return false;
+    }
 }
 
 userSchema.methods.gravatar = function (size){
