@@ -29,13 +29,10 @@ router.get('/create-save-user', async function (req,res,next){
 
 /* SIGNUP ROUTE */
 router.post('/signup', async function (req,res,next){
-  console.log("test");
-  console.log(req.body)
   let createdUser = await userController.createUser(req.body.email,req.body.username,req.body.password)
   console.log(createdUser)
   req.logIn(createdUser,function (err) {
     if (err) return next(err);
-    console.log("req.logIn");
     res.redirect('/');
   })
   res.send("You are a registered user now");
@@ -43,7 +40,7 @@ router.post('/signup', async function (req,res,next){
 
 /* LOGIN ROUTE */
 router.post('/login', passport.authenticate('local-login', {
-  successRedirect : '/profile', // redirect to the secure profile section
+  successRedirect : '/profile', // redirect to profile
   failureRedirect : '/profile2', // redirect back to the signup page if there is an error
   failureFlash : true // allow flash messages
 }),function (req,res){

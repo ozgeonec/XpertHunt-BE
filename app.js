@@ -179,6 +179,7 @@ mongoose.set("useCreateIndex", true);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(cors({credentials: true,origin:"http://localhost:3000"}));
 //routes
 
 app.use("/create-save-user", indexRouter);
@@ -186,7 +187,7 @@ app.use("/home", indexRouter);
 app.use("/signup", indexRouter);
 
 app.use(express.static(path.join(__dirname, "public")));
-app.use(cors({credentials: true,origin:"http://localhost:3000"}));
+
 app.use(cookieParser());
 app.use(
     session({
