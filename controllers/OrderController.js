@@ -19,10 +19,10 @@ module.exports = {
         })
         return order
     },
-    createOrder: async (buyer, desc, budget) => {
+    createOrder: async (buyer, description, budget) => {
         const order =  ORDER({
             buyer: buyer,
-            desc: desc,
+            description: description,
             budget: budget
         })
         try {

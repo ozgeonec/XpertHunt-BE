@@ -36,7 +36,8 @@ const userSchema = new Schema({
     occupation:{type:String},
     score:{type:Number},
     country:{type:String},
-    adverts:[{type:Schema.ObjectId, ref:'ADVERT' }]
+    adverts:[{type:Schema.ObjectId, ref:'ADVERT' }],
+    orders:[{type:Schema.ObjectId, ref:'ORDER' }]
 },{
     timestamps:true,
 })
