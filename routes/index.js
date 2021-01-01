@@ -2,6 +2,7 @@ let express = require('express');
 const router = express.Router();
 const userController = require('../controllers/UserController')
 const adController = require('../controllers/AdvertController')
+const orderController = require('../controllers/OrderController')
 
 const passport = require('passport');
 const {authenticate} = require('passport');
@@ -30,7 +31,6 @@ router.get('/create-save-user', async function (req,res,next){
 /* SIGNUP ROUTE */
 router.post('/signup', async function (req,res,next){
   let createdUser = await userController.createUser(req.body.email,req.body.username,req.body.password)
-  console.log(createdUser)
   req.logIn(createdUser,function (err) {
     if (err) return next(err);
     res.redirect('/');
@@ -48,18 +48,6 @@ router.post('/login', passport.authenticate('local-login', {
   console.log(res);
  // return res.json(req.body)
 })
-
-
-// router.post('/login', function(req, res, next) {
-//   console.log(req.url);
-//   passport.authenticate('local-login', function(err, user, info) {
-//       console.log("authenticate");
-//       console.log(err);
-//       console.log(user);
-//       console.log(req.body);
-//       console.log(info);
-//   })(req, res, next);
-// });
 
 router.get('/checkauth', passportConfig.isAuthenticated, function(req, res){
 
@@ -81,7 +69,7 @@ router.get('/profile', (req, res, next) => {
   res.json({  greeting: 'login is successful' });
 });
 
-/* PROFILE ROUTE */
+/* PROFILE FAILED ROUTE */
 router.get('/profile2', (req, res, next) => {
   console.log("hello profile2");
   //console.log(req.body);
@@ -98,6 +86,16 @@ router.get('/create-ad', async function (req,res,next){
   res.json(newGig)
 })
 
+/* ORDER ROUTE */
+router.get('/create-save-order', async function (req,res,next){
+  let newOrder = await orderController.createAndSaveOrder()
+  res.json(newOrder)
+})
+
+router.post('/create-order', async function (req,res,next){
+  let createdOrder = await orderController.createOrder(req.body.buyer,req.body.desc,req.body.budget)
+  res.json(createdOrder)
+})
 
 
 module.exports = router;

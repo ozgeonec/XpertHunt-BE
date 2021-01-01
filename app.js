@@ -128,7 +128,7 @@
 // app.use(function(req, res, next) {
 //   next(createError(404));
 // });
-
+require("dotenv").config({path: __dirname + './env'});
 const createError = require("http-errors");
 const express = require("express");
 const path = require("path");
@@ -141,7 +141,7 @@ const session = require("express-session");
 const cookieParser = require("cookie-parser");
 const passport = require("passport");
 const indexRouter = require("./routes/index");
-require("dotenv").config();
+
 ////////////////////////////////////////////////////////
 const app = express();
 
@@ -176,7 +176,7 @@ mongoose.set("useCreateIndex", true);
 //     }
 //     next();
 // });
-
+app.use(flash());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cors({credentials: true,origin:"http://localhost:3000"}));
@@ -200,7 +200,7 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(indexRouter);
-app.use(flash());
+
 
 app.use(function (req, res, next) {
     res.locals.user = req.user;

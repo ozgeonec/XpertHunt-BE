@@ -1,6 +1,5 @@
 const USER = require('../models/UserModel')
-const passport = require('passport');
-const passportConfig = require('../config/passport');
+
 
 module.exports = {
    getUser: async (id,done) => {

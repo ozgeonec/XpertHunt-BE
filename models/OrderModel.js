@@ -6,6 +6,8 @@ const {Schema} = mongoose
 const OrderSchema = new Schema({
     buyer: { type: Schema.ObjectId, ref: 'USER' },
     seller: { type: Schema.ObjectId, ref: 'USER' },
+    description: {type: String, minLength: 150, maxLength: 1200},
+    budget: {type: Number, min:5},
     created: { type: Date, default: Date.now }
 });
 
