@@ -8,6 +8,13 @@ module.exports = {
             done(null, data)
         })
    },
+   getUsernameById: async (id) => {
+       await USER.findById(id,function (err,data){
+           if (err) return console.log(err)
+           console.log("data: " + data)
+           return data
+       })
+   },
    getUserByUsername: async (username) => {
        await USER.find({username:username}, function (err,data){
            if (err){
