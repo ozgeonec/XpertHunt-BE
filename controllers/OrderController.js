@@ -34,6 +34,9 @@ module.exports = {
     getAllOrdersByUser: async (user) => {
         let order =  await ORDER.findOne({buyer: user}).populate('buyer')
         return order
+    },
+    getAllOrders: async ()=>{
+        return await ORDER.find({}).populate('buyer')
     }
 
 }

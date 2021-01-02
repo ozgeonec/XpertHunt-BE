@@ -104,5 +104,11 @@ router.get('/myOrders', async function (req,res,next){
   res.json(orders)
 })
 
+router.get('/allOrders', async function (req,res,next){
+  let orders = await orderController.getAllOrders()
+  res.send(orders)
+})
+
+
 module.exports = router;
 
