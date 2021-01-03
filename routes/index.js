@@ -79,9 +79,24 @@ router.get('/logout', (req, res) => {
   res.redirect('/');
 });
 /* ADVERT ROUTE */
-router.get('/create-ad', async function (req,res,next){
-  let newGig = await adController.createAdvert()
-  res.json(newGig)
+router.get('/create-save-ad', async function (req,res,next){
+  let newAd = await adController.createAndSaveAdvert()
+  res.json(newAd)
+})
+
+router.post('/create-ad', async function (req,res){
+
+  let newAd = await adController.createAdvert(req.user._id, req.body.title, req.body.about,req.body.price)
+  res.json(newAd)
+})
+router.get('/myAds', async function (req,res,next){
+  let ads = await adController.getAllAdsByUser(req.user)
+  res.json(ads)
+})
+
+router.get('/allAds', async function (req,res,next){
+  let ads = await adController.getAllAdverts()
+  res.send(ads)
 })
 
 /* ORDER ROUTE */
@@ -95,18 +110,13 @@ router.post('/create-order', async function (req,res,next){
   res.json(createdOrder)
 })
 router.get('/myOrders', async function (req,res,next){
-  //console.log(req.user)
   let orders = await orderController.getAllOrdersByUser(req.user)
-  //let user = await userController.getUsernameById(req.user.id)
-  console.log(orders)
-  //console.log("user" + user)
-
   res.json(orders)
 })
 
 router.get('/allOrders', async function (req,res,next){
   let orders = await orderController.getAllOrders()
-  res.send(orders)
+  res.json(orders)
 })
 
 

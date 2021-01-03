@@ -1,7 +1,7 @@
 const ADVERT = require('../models/AdvertModel')
 
 module.exports = {
-    createAdvert: async (done) => {
+    createAndSaveAdvert: async (done) => {
         const gig = ADVERT({
             owner: "5fd8f9375644ec42a05e863f",
             title: "Developer",
@@ -15,7 +15,28 @@ module.exports = {
             console.log(data)
         })
         return gig
+    },
+    createAdvert: async (owner,title,about,price) => {
+        const advert = ADVERT({
+            owner:owner,
+            title:title,
+            about:about,
+            price:price
+        })
+        try {
+            return await advert.save()
+        } catch (error) {
+            throw error
+        }
+    },
+    getAllAdsByUser: async (user) => {
+        let ad =  await ADVERT.findOne({owner: user}).populate('owner')
+        return ad
+    },
+    getAllAdverts: async ()=>{
+        return await ADVERT.findOne({}).populate('owner')
     }
+
 
 
 
