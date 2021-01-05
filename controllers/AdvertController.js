@@ -3,12 +3,10 @@ const ADVERT = require('../models/AdvertModel')
 module.exports = {
     createAndSaveAdvert: async (done) => {
         const gig = ADVERT({
-            owner: "5fd8f9375644ec42a05e863f",
+            owner: "5fe31c4073836e533890e5b8",
             title: "Developer",
-            category: "Web Development",
             about:"I can design and develop your website",
-            price: 5,
-            picture:"https://lh3.googleusercontent.com/ogw/ADGmqu-Z2CJscEKAZuKCIqH7sh_tLDOBbUTGxVILvrYVCeE=s32-c-mo"
+            price: 10
         })
         await gig.save(function(err, data) {
             if (err) {console.log(err)}
@@ -34,7 +32,8 @@ module.exports = {
         return ad
     },
     getAllAdverts: async ()=>{
-        return await ADVERT.findOne({}).populate('owner')
+        let ads =  await ADVERT.find({}).populate('owner')
+        return ads
     }
 
 

@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 const {Schema} = mongoose
 
 const advertSchema = new Schema({
-    owner: {type: Schema.ObjectId, ref: 'User'},
+    owner: {type: Schema.ObjectId, ref: 'USER'},
     title: {type: String},
     about:{type: String,  maxLength: 50},
     price: {type: Number},

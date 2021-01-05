@@ -1,5 +1,11 @@
 const ORDER = require('../models/OrderModel')
-
+/*function(err,updated){
+            if (err) {console.log(err)}
+            else{
+                return updated
+            }
+            console.log(updated)
+        }*/
 module.exports = {
     createAndSaveOrder: async (done) => {
         const order = ORDER({
@@ -37,6 +43,16 @@ module.exports = {
     },
     getAllOrders: async ()=>{
         return await ORDER.find({}).populate('buyer')
+    },
+    pushAppliedUsers: async (id,user) =>{
+        return await ORDER.findByIdAndUpdate(id,{ $push: { applied: user } }).exec()
+
+    },
+    apply: async (id,user) =>{
+        console.log(id)
+        console.log(user)
+        const result = await ORDER.updateOne({_id:id}, {$push: {applied: user}})
+        console.log(result)
     }
 
 }

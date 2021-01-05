@@ -86,7 +86,7 @@ router.get('/create-save-ad', async function (req,res,next){
 
 router.post('/create-ad', async function (req,res){
 
-  let newAd = await adController.createAdvert(req.user._id, req.body.title, req.body.about,req.body.price)
+  let newAd = await adController.createAdvert(req.user.id, req.body.title, req.body.about,req.body.price)
   res.json(newAd)
 })
 router.get('/myAds', async function (req,res,next){
@@ -96,7 +96,7 @@ router.get('/myAds', async function (req,res,next){
 
 router.get('/allAds', async function (req,res,next){
   let ads = await adController.getAllAdverts()
-  res.send(ads)
+  res.json(ads)
 })
 
 /* ORDER ROUTE */
@@ -106,7 +106,7 @@ router.get('/create-save-order', async function (req,res,next){
 })
 
 router.post('/create-order', async function (req,res,next){
-  let createdOrder = await orderController.createOrder(req.user._id,req.body.description,req.body.budget)
+  let createdOrder = await orderController.createOrder(req.user.id,req.body.description,req.body.budget)
   res.json(createdOrder)
 })
 router.get('/myOrders', async function (req,res,next){
@@ -118,7 +118,10 @@ router.get('/allOrders', async function (req,res,next){
   let orders = await orderController.getAllOrders()
   res.json(orders)
 })
-
+router.post('/apply',async function (req,res,next){
+  let orders = await orderController.apply(req.body,req.user._id)
+  res.json(orders)
+})
 
 module.exports = router;
 
