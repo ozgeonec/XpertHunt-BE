@@ -49,10 +49,10 @@ module.exports = {
 
     },
     apply: async (id,user) =>{
-        console.log(id)
-        console.log(user)
-        const result = await ORDER.updateOne({_id:id}, {$push: {applied: user}})
-        console.log(result)
+        //console.log(id)
+        //console.log(user)
+        const result = await ORDER.updateOne({_id:id}, {$push: {applied: user}}).populate('applied')
+        //console.log(result)
     }
 
 }

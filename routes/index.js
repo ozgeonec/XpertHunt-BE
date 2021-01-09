@@ -119,7 +119,11 @@ router.get('/allOrders', async function (req,res,next){
   res.json(orders)
 })
 router.post('/apply',async function (req,res,next){
-  let orders = await orderController.apply(req.body,req.user._id)
+  let orders = await orderController.apply(req.body._id,req.user)
+  console.log(req.user)
+  //console.log(req.body)
+  //console.log("orderid:", req.body._id)
+  console.log(req.user._id)
   res.json(orders)
 })
 

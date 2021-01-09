@@ -8,7 +8,7 @@ const OrderSchema = new Schema({
     seller: [{ type: Schema.ObjectId, ref: 'USER' }],
     description: {type: String, maxLength: 1200},
     budget: {type: Number, min:5},
-    applied: [{ type: Schema.ObjectId, ref: 'USER' }],
+    applied: [{ type: Schema.ObjectId, ref: 'USER', unique: true }],
     created: { type: Date, default: Date.now }
 });
 
