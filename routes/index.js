@@ -106,7 +106,7 @@ router.get('/create-save-order', async function (req,res,next){
 })
 
 router.post('/create-order', async function (req,res,next){
-  let createdOrder = await orderController.createOrder(req.user.id,req.body.description,req.body.budget)
+  let createdOrder = await orderController.createOrder(req.user._id,req.body.description,req.body.budget)
   res.json(createdOrder)
 })
 router.get('/myOrders', async function (req,res,next){
