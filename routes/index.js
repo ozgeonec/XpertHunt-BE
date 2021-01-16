@@ -90,11 +90,13 @@ router.post('/create-ad', async function (req,res){
   res.json(newAd)
 })
 router.get('/myAds', async function (req,res,next){
+
   let ads = await adController.getAllAdsByUser(req.user)
   res.json(ads)
 })
 
 router.get('/allAds', async function (req,res,next){
+  console.log("ozge")
   let ads = await adController.getAllAdverts()
   res.json(ads)
 })
@@ -110,11 +112,13 @@ router.post('/create-order', async function (req,res,next){
   res.json(createdOrder)
 })
 router.get('/myOrders', async function (req,res,next){
+  console.log("emre")
   let orders = await orderController.getAllOrdersByUser(req.user)
   res.json(orders)
 })
 
 router.get('/allOrders', async function (req,res,next){
+  console.log("dfsfsafsdvg")
   let orders = await orderController.getAllOrders()
   res.json(orders)
 })

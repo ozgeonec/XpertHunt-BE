@@ -27,6 +27,8 @@ module.exports = {
             budget: budget
         })
         try {
+            await order.populate({path:'buyer',
+             model:'USER'}).execPopulate()
             return await order.save()
         } catch (error) {
             throw error
