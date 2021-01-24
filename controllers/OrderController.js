@@ -52,6 +52,10 @@ module.exports = {
 
         return result
         //console.log(result)
+    },
+    appliedOrders: async (user) => {
+        const res = await ORDER.find({applied: user.username}).populate('buyer')
+        return res
     }
 
 }

@@ -71,22 +71,9 @@ userSchema.methods.comparePassword = async function(enterPassword){
     }
 }
 
-userSchema.methods.gravatar = function (size){
-    if (!size)
-        size = 200;
-    if (!this.email)
-        return 'https://gravatar.com/avatar/?s=' + size + '&d=retro';
-    let md5 = crypto
-        .createHash('md5')
-        .update(this.email)
-        .digest('hex');
-    return 'https://gravatar.com/avatar/' + md5 + '?s=' + size + '&d=retro';
-}
 
 const USER = mongoose.model('USER', userSchema)
 
-// let user =new USER
-// user.avatar.data = fs.readFileSync('public/images/profilpic.jpg')
-// user.avatar.contentType = 'image/jpg'
+
 
 module.exports=USER;

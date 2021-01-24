@@ -25,7 +25,7 @@ module.exports = {
            }
        })
    },
-   createUser: async (email, username, password) => {
+   createUser: async (email, username, password,next) => {
        const user =  USER({
            email: email,
            username: username,
@@ -34,7 +34,11 @@ module.exports = {
        try {
             return await user.save()
        } catch (error) {
+           next(error)
+           console.log(error)
+           console.log("siktigimin bokuuuuuuuuuuuuuu")
             throw error
+
        }
    },
    createAndSaveUser: async (done) => {
